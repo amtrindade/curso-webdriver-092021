@@ -31,7 +31,7 @@ public class WebElementsTest {
 	}
 
 	@Test
-	public void testValidationName() throws InterruptedException {
+	public void testValidationName(){
 		WebElement textFieldBox1 = driver.findElement(By.name("txtbox1"));
 				
 		textFieldBox1.sendKeys("Antônio");
