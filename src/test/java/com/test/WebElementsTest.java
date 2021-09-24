@@ -2,6 +2,8 @@ package com.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,9 +42,27 @@ public class WebElementsTest {
 	@Test
 	public void testValidateTextFieldsDisabled() {
 		WebElement textFieldBox1 = driver.findElement(By.name("txtbox1"));
-		WebElement textFieldBox2 = driver.findElement(By.name("txtbox2"));
+		WebElement textFieldBox2 = driver.findElement(By.xpath("//input[@name='txtbox2']"));
 		
 		assertTrue(textFieldBox1.isEnabled());
 		assertFalse(textFieldBox2.isEnabled());
+	}
+	
+	@Test
+	public void testValidateRadioButton() throws InterruptedException {
+		List<WebElement> radios = driver.findElements(By.name("radioGroup1"));
+		
+		assertEquals("O tamanho não está de acordo!", 4, radios.size());
+		
+		for(WebElement e: radios) {
+			if (e.getAttribute("value").equals("Radio Button 3 selecionado")) {
+				e.click();
+			}
+		}
+		
+		assertTrue("Posição 3 deveria estar selecionada!", radios.get(2).isSelected());
+		assertFalse("Posição 4 não deveria estar selecionada!", radios.get(3).isSelected());
+		assertFalse("Posição 1 não deveria estar selecionada!", radios.get(0).isSelected());
+		assertFalse("Posição 2 não deveria estar selecionada", radios.get(1).isSelected());
 	}
 }
