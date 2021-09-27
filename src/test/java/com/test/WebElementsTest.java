@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 
 public class WebElementsTest {
@@ -81,4 +82,20 @@ public class WebElementsTest {
 		assertTrue("Posição 3 deveria estar selecionada!", listChecks.get(2).isSelected());
 		assertTrue("Posiçao 4 deveria estar selecionada!", listChecks.get(3).isSelected());
 	}
+	
+	@Test
+	public void testValidateSingleSelect() {
+		WebElement dropSingle = driver.findElement(By.name("dropdownlist"));
+		Select selectSingle = new Select(dropSingle);
+		
+		selectSingle.selectByIndex(0);
+		assertEquals("Item 1", selectSingle.getFirstSelectedOption().getText());
+		
+		selectSingle.selectByVisibleText("Item 7");		
+		assertEquals("Item 7", selectSingle.getFirstSelectedOption().getText());
+	}
+	
+	
+	
+	
 }
