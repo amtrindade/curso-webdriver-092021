@@ -54,9 +54,9 @@ public class WebElementsTest {
 		
 		assertEquals("O tamanho não está de acordo!", 4, radios.size());
 		
-		for(WebElement e: radios) {
-			if (e.getAttribute("value").equals("Radio Button 3 selecionado")) {
-				e.click();
+		for(WebElement el: radios) {
+			if (el.getAttribute("value").equals("Radio Button 3 selecionado")) {
+				el.click();
 			}
 		}
 		
@@ -64,5 +64,21 @@ public class WebElementsTest {
 		assertFalse("Posição 4 não deveria estar selecionada!", radios.get(3).isSelected());
 		assertFalse("Posição 1 não deveria estar selecionada!", radios.get(0).isSelected());
 		assertFalse("Posição 2 não deveria estar selecionada", radios.get(1).isSelected());
+	}
+	
+	@Test
+	public void testValidateCheckBox() throws InterruptedException {
+		List<WebElement> listChecks = driver.findElements(By.name("chkbox"));
+		
+		assertEquals("Tamanho deveria ser 4!", 4, listChecks.size());
+		
+		for(WebElement el: listChecks) {
+			if ((el.getAttribute("value").equals("Check Box 3 selecionado")) ||
+					(el.getAttribute("value").equals("Check Box 4 selecionado"))) {
+				el.click();
+			}			
+		}
+		assertTrue("Posição 3 deveria estar selecionada!", listChecks.get(2).isSelected());
+		assertTrue("Posiçao 4 deveria estar selecionada!", listChecks.get(3).isSelected());
 	}
 }
