@@ -1,6 +1,8 @@
 package com.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -95,7 +97,31 @@ public class WebElementsTest {
 		assertEquals("Item 7", selectSingle.getFirstSelectedOption().getText());
 	}
 	
-	
-	
+	@Test
+	public void testValidateMultiSelect() throws InterruptedException {
+		WebElement dropMulti = driver.findElement(By.name("multiselectdropdown"));
+		Select selectMulti = new Select(dropMulti);
+		
+		selectMulti.selectByVisibleText("Item 5");
+		selectMulti.selectByVisibleText("Item 8");
+		selectMulti.selectByVisibleText("Item 9");
+		
+		assertEquals("Deveriam ter 3 elementos!", 3, selectMulti.getAllSelectedOptions().size());
+		
+		assertEquals("Item 5", selectMulti.getAllSelectedOptions().get(0).getText());
+		assertEquals("Item 8", selectMulti.getAllSelectedOptions().get(1).getText());
+		assertEquals("Item 9", selectMulti.getAllSelectedOptions().get(2).getText());
+		
+		
+		selectMulti.deselectByVisibleText("Item 8");
+		
+		assertEquals("Deveriam ter 2 elementos!", 2, selectMulti.getAllSelectedOptions().size());
+
+		assertEquals("Item 5", selectMulti.getAllSelectedOptions().get(0).getText());
+		assertEquals("Item 9", selectMulti.getAllSelectedOptions().get(1).getText());
+		
+		selectMulti.deselectAll();
+		
+	}
 	
 }
