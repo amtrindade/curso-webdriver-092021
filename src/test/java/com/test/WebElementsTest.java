@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -121,7 +122,46 @@ public class WebElementsTest {
 		assertEquals("Item 9", selectMulti.getAllSelectedOptions().get(1).getText());
 		
 		selectMulti.deselectAll();
+	}
+	
+	@Test
+	public void testValidateIFrames() throws InterruptedException {
+		driver.switchTo().frame("iframe_b");
 		
+		Thread.sleep(3000);
+		
+		WebElement btnAllow = driver.findElement(By.cssSelector("a.cc-btn.cc-ALLOW"));
+		//assertTrue(btnAllow.isDisplayed());
+				
+		driver.switchTo().defaultContent();
+		
+		driver.switchTo().frame("iframe_d");
+		
+		WebElement btnMenu = driver.findElement(By.cssSelector("nav > button"));
+		btnMenu.click();
+		
+		WebElement tfSelenium = driver.findElement(By.cssSelector("#main_navbar > div > span > input"));
+		tfSelenium.sendKeys("Antônio");
+		assertEquals("Antônio", tfSelenium.getAttribute("value"));
+	}
+	
+	@Test
+	public void testValidateAlerts() {
+		WebElement btnAlert = driver.findElement(By.name("alertbtn"));
+		btnAlert.click();
+		
+		Alert alert = driver.switchTo().alert();
+		
+		assertEquals("Eu sou um alerta!", alert.getText());
+		
+		alert.accept();
+		
+		WebElement btnConfirm = driver.findElement(By.name("confirmbtn"));
+		btnConfirm.click();
+		
+		Alert alert2 = driver.switchTo().alert();
+		assertEquals("Pressione um botão!", alert2.getText());
+		alert2.dismiss();
 	}
 	
 }
