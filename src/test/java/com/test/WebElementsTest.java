@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,6 +27,7 @@ public class WebElementsTest {
 				"/home/antonio/dev/drivers/chromedriver");
 				//"c:\\driver\\chromedriver.exe"
 		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get("http://antoniotrindade.com.br/treinoautomacao/elementsweb.html");
 	}
 
@@ -126,12 +128,12 @@ public class WebElementsTest {
 	
 	@Test
 	public void testValidateIFrames() throws InterruptedException {
+		
 		driver.switchTo().frame("iframe_b");
 		
-		Thread.sleep(3000);
-		
-		WebElement btnAllow = driver.findElement(By.cssSelector("a.cc-btn.cc-ALLOW"));
-		//assertTrue(btnAllow.isDisplayed());
+		WebElement btnAllow = driver.findElement(By.cssSelector(".cc-banner.cc-type-opt-in.cc-theme-classic.cc-bottom.cc-color-override-1444386161 > div > a.cc-btn.cc-ALLOW"));
+		assertTrue(btnAllow.isDisplayed());
+		btnAllow.click();
 				
 		driver.switchTo().defaultContent();
 		
