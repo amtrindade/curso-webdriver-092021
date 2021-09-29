@@ -129,12 +129,13 @@ public class WebElementsTest {
 	@Test
 	public void testValidateIFrames() throws InterruptedException {
 		
-		driver.switchTo().frame("iframe_b");
+		driver.switchTo().frame("iframe_b");	
 		
-		WebElement btnAllow = driver.findElement(By.cssSelector(".cc-banner.cc-type-opt-in.cc-theme-classic.cc-bottom.cc-color-override-1444386161 > div > a.cc-btn.cc-ALLOW"));
-		assertTrue(btnAllow.isDisplayed());
-		btnAllow.click();
+		List<WebElement> btnAllow = driver.findElements(By.cssSelector("a.cc-btn.cc-ALLOW"));
+		assertTrue(btnAllow.get(1).isDisplayed());
+		btnAllow.get(1).click();
 				
+		
 		driver.switchTo().defaultContent();
 		
 		driver.switchTo().frame("iframe_d");
