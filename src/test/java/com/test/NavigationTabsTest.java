@@ -8,10 +8,13 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.inter.PositiveInterface;
 
 public class NavigationTabsTest {
 	private WebDriver driver;
@@ -30,6 +33,7 @@ public class NavigationTabsTest {
 		driver.quit();
 	}
 
+	@Category(PositiveInterface.class)
 	@Test
 	public void testNavigationTabs() throws InterruptedException {
 		assertEquals("Treino Automação de Testes", driver.getTitle());

@@ -9,7 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +21,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.inter.NegativeInterface;
+import com.inter.PositiveInterface;
 
+@FixMethodOrder(MethodSorters.DEFAULT)
 public class WebElementsTest {
 	private WebDriver driver;
 	
@@ -36,7 +43,9 @@ public class WebElementsTest {
 		driver.quit();
 	}
 
+	
 	@Test
+	@Category(PositiveInterface.class)
 	public void testValidationName(){
 		WebElement textFieldBox1 = driver.findElement(By.name("txtbox1"));
 				
@@ -46,6 +55,7 @@ public class WebElementsTest {
 	}
 	
 	@Test
+	@Category(PositiveInterface.class)
 	public void testValidateTextFieldsDisabled() {
 		WebElement textFieldBox1 = driver.findElement(By.name("txtbox1"));
 		WebElement textFieldBox2 = driver.findElement(By.xpath("//input[@name='txtbox2']"));
@@ -55,6 +65,7 @@ public class WebElementsTest {
 	}
 	
 	@Test
+	@Category(NegativeInterface.class)
 	public void testValidateRadioButton() throws InterruptedException {
 		List<WebElement> radios = driver.findElements(By.name("radioGroup1"));
 		
@@ -73,6 +84,7 @@ public class WebElementsTest {
 	}
 	
 	@Test
+	@Category(NegativeInterface.class)
 	public void testValidateCheckBox() throws InterruptedException {
 		List<WebElement> listChecks = driver.findElements(By.name("chkbox"));
 		
@@ -89,6 +101,7 @@ public class WebElementsTest {
 	}
 	
 	@Test
+	@Category(NegativeInterface.class)
 	public void testValidateSingleSelect() {
 		WebElement dropSingle = driver.findElement(By.name("dropdownlist"));
 		Select selectSingle = new Select(dropSingle);
@@ -101,6 +114,7 @@ public class WebElementsTest {
 	}
 	
 	@Test
+	@Category(NegativeInterface.class)
 	public void testValidateMultiSelect() throws InterruptedException {
 		WebElement dropMulti = driver.findElement(By.name("multiselectdropdown"));
 		Select selectMulti = new Select(dropMulti);
@@ -126,6 +140,8 @@ public class WebElementsTest {
 		selectMulti.deselectAll();
 	}
 	
+	@Ignore("Desabilitado teste devido ao bug xpt-345")
+	@Category(NegativeInterface.class)
 	@Test
 	public void testValidateIFrames() throws InterruptedException {
 		
@@ -134,7 +150,6 @@ public class WebElementsTest {
 		List<WebElement> btnAllow = driver.findElements(By.cssSelector("a.cc-btn.cc-ALLOW"));
 		assertTrue(btnAllow.get(1).isDisplayed());
 		btnAllow.get(1).click();
-				
 		
 		driver.switchTo().defaultContent();
 		
@@ -148,7 +163,7 @@ public class WebElementsTest {
 		assertEquals("Antônio", tfSelenium.getAttribute("value"));
 	}
 	
-	@Test
+	@Test	
 	public void testValidateAlerts() {
 		WebElement btnAlert = driver.findElement(By.name("alertbtn"));
 		btnAlert.click();
