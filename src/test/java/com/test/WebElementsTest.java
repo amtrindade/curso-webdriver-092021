@@ -1,13 +1,12 @@
 package com.test;
 
+import static com.core.DriverFactory.getDriver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -16,38 +15,25 @@ import org.junit.experimental.categories.Category;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import com.core.BaseTest;
 import com.inter.NegativeInterface;
 import com.inter.PositiveInterface;
 
 @FixMethodOrder(MethodSorters.DEFAULT)
-public class WebElementsTest {
-	private WebDriver driver;
+public class WebElementsTest extends BaseTest{
 	
 	@Before
 	public void setUp() throws Exception {
-		System.setProperty("webdriver.chrome.driver", 
-				"/home/antonio/dev/drivers/chromedriver");
-				//"c:\\driver\\chromedriver.exe"
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get("http://antoniotrindade.com.br/treinoautomacao/elementsweb.html");
+		getDriver().get("http://antoniotrindade.com.br/treinoautomacao/elementsweb.html");
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		driver.quit();
-	}
-
 	
 	@Test
 	@Category(PositiveInterface.class)
 	public void testValidationName(){
-		WebElement textFieldBox1 = driver.findElement(By.name("txtbox1"));
+		WebElement textFieldBox1 = getDriver().findElement(By.name("txtbox1"));
 				
 		textFieldBox1.sendKeys("Antônio");
 		
@@ -57,8 +43,8 @@ public class WebElementsTest {
 	@Test
 	@Category(PositiveInterface.class)
 	public void testValidateTextFieldsDisabled() {
-		WebElement textFieldBox1 = driver.findElement(By.name("txtbox1"));
-		WebElement textFieldBox2 = driver.findElement(By.xpath("//input[@name='txtbox2']"));
+		WebElement textFieldBox1 = getDriver().findElement(By.name("txtbox1"));
+		WebElement textFieldBox2 = getDriver().findElement(By.xpath("//input[@name='txtbox2']"));
 		
 		assertTrue(textFieldBox1.isEnabled());
 		assertFalse(textFieldBox2.isEnabled());
@@ -67,7 +53,7 @@ public class WebElementsTest {
 	@Test
 	@Category(NegativeInterface.class)
 	public void testValidateRadioButton() throws InterruptedException {
-		List<WebElement> radios = driver.findElements(By.name("radioGroup1"));
+		List<WebElement> radios = getDriver().findElements(By.name("radioGroup1"));
 		
 		assertEquals("O tamanho não está de acordo!", 4, radios.size());
 		
@@ -86,7 +72,7 @@ public class WebElementsTest {
 	@Test
 	@Category(NegativeInterface.class)
 	public void testValidateCheckBox() throws InterruptedException {
-		List<WebElement> listChecks = driver.findElements(By.name("chkbox"));
+		List<WebElement> listChecks = getDriver().findElements(By.name("chkbox"));
 		
 		assertEquals("Tamanho deveria ser 4!", 4, listChecks.size());
 		
@@ -103,7 +89,7 @@ public class WebElementsTest {
 	@Test
 	@Category(NegativeInterface.class)
 	public void testValidateSingleSelect() {
-		WebElement dropSingle = driver.findElement(By.name("dropdownlist"));
+		WebElement dropSingle = getDriver().findElement(By.name("dropdownlist"));
 		Select selectSingle = new Select(dropSingle);
 		
 		selectSingle.selectByIndex(0);
@@ -116,7 +102,7 @@ public class WebElementsTest {
 	@Test
 	@Category(NegativeInterface.class)
 	public void testValidateMultiSelect() throws InterruptedException {
-		WebElement dropMulti = driver.findElement(By.name("multiselectdropdown"));
+		WebElement dropMulti = getDriver().findElement(By.name("multiselectdropdown"));
 		Select selectMulti = new Select(dropMulti);
 		
 		selectMulti.selectByVisibleText("Item 5");
@@ -145,39 +131,39 @@ public class WebElementsTest {
 	@Test
 	public void testValidateIFrames() throws InterruptedException {
 		
-		driver.switchTo().frame("iframe_b");	
+		getDriver().switchTo().frame("iframe_b");	
 		
-		List<WebElement> btnAllow = driver.findElements(By.cssSelector("a.cc-btn.cc-ALLOW"));
+		List<WebElement> btnAllow = getDriver().findElements(By.cssSelector("a.cc-btn.cc-ALLOW"));
 		assertTrue(btnAllow.get(1).isDisplayed());
 		btnAllow.get(1).click();
 		
-		driver.switchTo().defaultContent();
+		getDriver().switchTo().defaultContent();
 		
-		driver.switchTo().frame("iframe_d");
+		getDriver().switchTo().frame("iframe_d");
 		
-		WebElement btnMenu = driver.findElement(By.cssSelector("nav > button"));
+		WebElement btnMenu = getDriver().findElement(By.cssSelector("nav > button"));
 		btnMenu.click();
 		
-		WebElement tfSelenium = driver.findElement(By.cssSelector("#main_navbar > div > span > input"));
+		WebElement tfSelenium = getDriver().findElement(By.cssSelector("#main_navbar > div > span > input"));
 		tfSelenium.sendKeys("Antônio");
 		assertEquals("Antônio", tfSelenium.getAttribute("value"));
 	}
 	
 	@Test	
 	public void testValidateAlerts() {
-		WebElement btnAlert = driver.findElement(By.name("alertbtn"));
+		WebElement btnAlert = getDriver().findElement(By.name("alertbtn"));
 		btnAlert.click();
 		
-		Alert alert = driver.switchTo().alert();
+		Alert alert = getDriver().switchTo().alert();
 		
 		assertEquals("Eu sou um alerta!", alert.getText());
 		
 		alert.accept();
 		
-		WebElement btnConfirm = driver.findElement(By.name("confirmbtn"));
+		WebElement btnConfirm = getDriver().findElement(By.name("confirmbtn"));
 		btnConfirm.click();
 		
-		Alert alert2 = driver.switchTo().alert();
+		Alert alert2 = getDriver().switchTo().alert();
 		assertEquals("Pressione um botão!", alert2.getText());
 		alert2.dismiss();
 	}

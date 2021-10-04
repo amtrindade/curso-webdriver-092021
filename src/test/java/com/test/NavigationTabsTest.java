@@ -1,70 +1,57 @@
 package com.test;
 
-import static org.junit.Assert.*;
+import static com.core.DriverFactory.getDriver;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.core.BaseTest;
 import com.inter.PositiveInterface;
 
-public class NavigationTabsTest {
-	private WebDriver driver;
-
+public class NavigationTabsTest extends BaseTest {
+	
 	@Before
-	public void setUp() throws Exception {
-		System.setProperty("webdriver.chrome.driver", 
-				"/home/antonio/dev/drivers/chromedriver");				
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get("http://antoniotrindade.com.br/treinoautomacao");
+	public void setUp() throws Exception {	
+		getDriver().get("http://antoniotrindade.com.br/treinoautomacao");
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		driver.quit();
-	}
-
+	
 	@Category(PositiveInterface.class)
 	@Test
 	public void testNavigationTabs() throws InterruptedException {
-		assertEquals("Treino Automação de Testes", driver.getTitle());
+		assertEquals("Treino Automação de Testes", getDriver().getTitle());
 		
-		WebElement linkCPF = driver.findElement(By.linkText("Gerador de CPF"));
+		WebElement linkCPF = getDriver().findElement(By.linkText("Gerador de CPF"));
 		linkCPF.click();
 		
-		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		ArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles());
 		assertEquals(2, tabs.size());
-		driver.switchTo().window(tabs.get(1));
+		getDriver().switchTo().window(tabs.get(1));
 		
-		assertEquals("Gerador de CPF", driver.getTitle());
+		assertEquals("Gerador de CPF", getDriver().getTitle());
 		
-		driver.switchTo().window(tabs.get(0));
-		assertEquals("Treino Automação de Testes", driver.getTitle());
+		getDriver().switchTo().window(tabs.get(0));
+		assertEquals("Treino Automação de Testes", getDriver().getTitle());
 		
-		WebElement linkJQuery = driver.findElement(By.linkText("Drag and Drop JQuery"));
+		WebElement linkJQuery = getDriver().findElement(By.linkText("Drag and Drop JQuery"));
 		linkJQuery.click();
 		
-		tabs = new ArrayList<String>(driver.getWindowHandles());
+		tabs = new ArrayList<String>(getDriver().getWindowHandles());
 		assertEquals(3, tabs.size());
 		
-		driver.switchTo().window(tabs.get(2));
+		getDriver().switchTo().window(tabs.get(2));
 		
-		assertEquals("jQuery UI Droppable - Default functionality", driver.getTitle());
+		assertEquals("jQuery UI Droppable - Default functionality", getDriver().getTitle());
 		
-		driver.switchTo().window(tabs.get(1));
-		assertEquals("Gerador de CPF", driver.getTitle());
+		getDriver().switchTo().window(tabs.get(1));
+		assertEquals("Gerador de CPF", getDriver().getTitle());
 		
-		driver.switchTo().window(tabs.get(0));
-		assertEquals("Treino Automação de Testes", driver.getTitle());
+		getDriver().switchTo().window(tabs.get(0));
+		assertEquals("Treino Automação de Testes", getDriver().getTitle());
 	}
-
 }
