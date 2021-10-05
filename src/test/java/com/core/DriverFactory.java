@@ -12,8 +12,8 @@ public class DriverFactory {
 	public static WebDriver getDriver() {
 		
 		if (driver == null) {
-			System.setProperty("webdriver.chrome.driver", 
-					"/home/antonio/dev/drivers/chromedriver");				
+			System.setProperty("webdriver.chrome.driver",
+					GlobaProperty.getProperty("webdriver.path") + "chromedriver");				
 			driver = new ChromeDriver();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
