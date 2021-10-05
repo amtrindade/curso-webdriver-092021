@@ -1,47 +1,29 @@
 package com.test;
 
+import static com.core.DriverFactory.getDriver;
 import static org.junit.Assert.assertTrue;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CpfCnpjTest {
-	
-	private WebDriver driver;
-	
-	@Before
-	public void setUp() throws Exception {
-		System.setProperty("webdriver.chrome.driver", 
-				"/home/antonio/dev/drivers/chromedriver");
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}
+import com.core.BaseTest;
 
-	@After
-	public void tearDown() throws Exception {
-		driver.quit();
-	}
-	
+public class CpfCnpjTest extends BaseTest {
+			
 	@Test
 	public void testValidateCpfWithMask() throws InterruptedException {
-		driver.get("https://www.geradordecpf.org/");
+		getDriver().get("https://www.geradordecpf.org/");
 		
-		WebElement checkMask = driver.findElement(By.id("cbPontos"));
+		WebElement checkMask = getDriver().findElement(By.id("cbPontos"));
 		checkMask.click();
 		
-		WebElement btnGenerate = driver.findElement(By.id("btn-gerar-cpf"));
+		WebElement btnGenerate = getDriver().findElement(By.id("btn-gerar-cpf"));
 		btnGenerate.click();
 		
-		WebElement textFieldCpf = driver.findElement(By.id("numero"));
+		WebElement textFieldCpf = getDriver().findElement(By.id("numero"));
 		
 		String cpf = textFieldCpf.getAttribute("value");
 		assertTrue("Expressão não valida", cpf.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$"));
@@ -49,12 +31,12 @@ public class CpfCnpjTest {
 	
 	@Test
 	public void testValidateCpfWhithoutMask() {
-		driver.get("https://www.geradordecpf.org/");
+		getDriver().get("https://www.geradordecpf.org/");
 		
-		WebElement btnGenerate = driver.findElement(By.id("btn-gerar-cpf"));
+		WebElement btnGenerate = getDriver().findElement(By.id("btn-gerar-cpf"));
 		btnGenerate.click();
 		
-		WebElement textFieldCpf = driver.findElement(By.id("numero"));
+		WebElement textFieldCpf = getDriver().findElement(By.id("numero"));
 		
 		String cpf = textFieldCpf.getAttribute("value");
 		System.out.println(cpf);
@@ -64,20 +46,20 @@ public class CpfCnpjTest {
 	
 	@Test
 	public void testValidateCnpjWithMask() throws InterruptedException {
-		driver.get("https://www.4devs.com.br/gerador_de_cnpj");
+		getDriver().get("https://www.4devs.com.br/gerador_de_cnpj");
 		
-		WebElement checkYes = driver.findElement(By.id("pontuacao_sim"));
+		WebElement checkYes = getDriver().findElement(By.id("pontuacao_sim"));
 		if (!checkYes.isSelected()) {
 			checkYes.click();
 		}
 		
-		WebElement btnGenereateCnpj = driver.findElement(By.id("bt_gerar_cnpj"));
+		WebElement btnGenereateCnpj = getDriver().findElement(By.id("bt_gerar_cnpj"));
 		btnGenereateCnpj.click();
 		
 		
-		WebElement labelCnpj = driver.findElement(By.id("texto_cnpj"));
+		WebElement labelCnpj = getDriver().findElement(By.id("texto_cnpj"));
 		
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(getDriver(), 10);
 		wait.until(ExpectedConditions
 				.invisibilityOfElementWithText(By.id("texto_cnpj"), "Gerando..."));
 		
@@ -90,21 +72,21 @@ public class CpfCnpjTest {
 	
 	@Test
 	public void testValidateCnpjWhithoutMask() throws InterruptedException {
-		driver.get("https://www.4devs.com.br/gerador_de_cnpj");
+		getDriver().get("https://www.4devs.com.br/gerador_de_cnpj");
 		
-		WebElement checkNo = driver.findElement(By.id("pontuacao_nao"));
+		WebElement checkNo = getDriver().findElement(By.id("pontuacao_nao"));
 		if (!checkNo.isSelected()) {
 			checkNo.click();
 		}
 		
-		WebElement btnGenereateCnpj = driver.findElement(By.id("bt_gerar_cnpj"));
+		WebElement btnGenereateCnpj = getDriver().findElement(By.id("bt_gerar_cnpj"));
 		btnGenereateCnpj.click();
 		
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(getDriver(), 10);
 		wait.until(ExpectedConditions
 				.invisibilityOfElementWithText(By.id("texto_cnpj"), "Gerando..."));
 		
-		WebElement labelCnpj = driver.findElement(By.id("texto_cnpj"));
+		WebElement labelCnpj = getDriver().findElement(By.id("texto_cnpj"));
 		String cnpj = labelCnpj.getText();
 		System.out.println(cnpj);
 		
