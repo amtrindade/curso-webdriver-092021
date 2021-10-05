@@ -20,7 +20,8 @@ public abstract class BaseTest {
 	@After
 	public void tearDown() throws IOException {
 		File scrnShot = ((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(scrnShot, new File("target"+ File.separator + testName.getMethodName()+ ".jpg"));
+		FileUtils.copyFile(scrnShot, new File(
+				"target"+ File.separator + testName.getMethodName()+ ".jpg"));
 		
 		DriverFactory.killDriver();
 	}
