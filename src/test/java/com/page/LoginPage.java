@@ -35,5 +35,23 @@ public class LoginPage {
 		btnLogin.click();
 		return new MainPage();
 	}
+
+	public LoginPage submitLoginInvalid() {
+		WebElement btnLogin = getDriver().findElement(By.id("submit_button"));
+		btnLogin.click();
+		return this;
+	}
+
+	public String getMessageError() {
+		WebElement messageError = getDriver().findElement(By.xpath("//*[@class='nm-tag']/.."));
+		return messageError.getText();
+	}
+	
+	public MainPage loggin(String environment, String username, String password) {
+		setEnvironment(environment);
+		setUsername(username);
+		setPassword(password);
+		return submitLogin();
+	}
 	
 }

@@ -28,5 +28,16 @@ public class LoginTest extends BaseTest{
 		
 	}
 	
-
+	@Test
+	public void testInvalidUserLogin() {
+		login = new LoginPage();
+		login.open();
+		login.setEnvironment("trindade");
+		login.setUsername("wronguser");
+		login.setPassword("wrongpassword");
+		
+		login.submitLoginInvalid();
+		
+		assertEquals("ERRO\nLOGIN INVÁLIDO.", login.getMessageError());
+	}
 }

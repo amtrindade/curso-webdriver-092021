@@ -20,4 +20,10 @@ public class MainPage {
 		return labelName.getText();
 	}
 
+	public TaskPage accessMenuTask() {
+		WebElement menuTask = getDriver().findElement(By.linkText("Tarefa"));
+		menuTask.click();
+		return new TaskPage();
+	}
+
 }
